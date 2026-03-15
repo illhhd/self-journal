@@ -9,7 +9,7 @@ export type Insight = {
   date: string;
   tags: string[];
   content: string;
-  dateObj: Date;
+  dateObj: string;
 };
 
 export function getInsights(): Insight[] {
@@ -45,7 +45,7 @@ export function getInsights(): Insight[] {
     return {
       id,
       date: dateStr,
-      dateObj: new Date(dateStr),
+      dateObj: new Date(dateStr).toISOString(),
       tags,
       content: matterResult.content,
       ...matterResult.data,
@@ -54,7 +54,7 @@ export function getInsights(): Insight[] {
   
   // Sort insights by date descending
   return allInsights.sort((a, b) => {
-    if (a.dateObj < b.dateObj) {
+    if (new Date(a.dateObj) < new Date(b.dateObj)) {
       return 1;
     } else {
       return -1;
